@@ -206,6 +206,8 @@ class MeshShardingHelper(object):
             A pytree of PartitionSpecs with the same structure as the input pytree.
         """
         def get_partition_spec(rule, pytree):
+            if rule is None:
+                return None
             if isinstance(rule, ShardingRule):
                 return jax.tree_util.tree_map(
                     lambda x: NamedSharding(self.mesh, x),
