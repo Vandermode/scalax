@@ -1,15 +1,13 @@
-from functools import partial
-import re
 import abc
+import re
 from dataclasses import dataclass
-from typing import Optional, Mapping, Union, ClassVar, List, Callable
-import numpy as np
+from typing import Callable, ClassVar, List, Mapping, Optional, Union
 
 import jax
 import jax.numpy as jnp
-from jax.sharding import PartitionSpec
-from jax.sharding import Mesh, NamedSharding
+import numpy as np
 from jax.experimental import mesh_utils
+from jax.sharding import Mesh, NamedSharding, PartitionSpec
 
 from scalax.utils import named_tree_map
 
@@ -459,7 +457,7 @@ class MeshShardingHelper(object):
         return jax.tree_util.tree_map(to_global_array, pytree)
 
 
-@dataclass
+@dataclass(frozen=True)
 class SJITCompiledFunction(object):
     """ SJIT compiled function with extra attribute for easy access. """
     mesh: MeshShardingHelper
